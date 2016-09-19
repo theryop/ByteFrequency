@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdexcept>
 #include <limits>
+#include <iomanip>
 
 using namespace std;
 
@@ -57,36 +58,16 @@ int main(int argc, char *argv[])
 		vector<string> sorted;
 		vector<int> sortedcount;
 		vector<double> sortedfcount;
-		//int ui = getchar();
+		int ui = getchar();
 		counter = 0;
-		//while (ui != EOF) // reads inputstream and fills input string with chosen input
-		//{
-		//	useri.push_back(ui);
-		//	ui = getchar();
-		//}
-		useri.push_back('a');
-		useri.push_back('g');
-		useri.push_back('e');
-		useri.push_back('e');
-		useri.push_back('e');
-		useri.push_back('d');
-		useri.push_back('2');
-		useri.push_back(' ');
-		useri.push_back(' ');
-		useri.push_back('a');
-		useri.push_back(' ');
-		useri.push_back(' ');
-		useri.push_back('n');
-		useri.push_back('n');
-		useri.push_back(' ');
-		useri.push_back('e');
-		useri.push_back('e');
-		useri.push_back('e');
-		useri.push_back(' ');
-		useri.push_back(' ');
-		
+		while (ui != EOF) // reads inputstream and fills input string with chosen input
+		{
+			useri.push_back(ui);
+			ui = getchar();
+		}
+
+		cout << endl;
 		counter = 0;
-		cout << "size is " << useri.size() << endl;
 		while ((unsigned)counter < useri.size())
 		{
 			char check = useri.at(counter);
@@ -210,7 +191,15 @@ int main(int argc, char *argv[])
 		{
 			if (!percents)
 			{
-				cout << sorted.at(counter) << " " << sortedcount.at(counter) << "; ";
+				if (pprocess != 1 && pprocess == 2)
+				{
+					cout << sorted.at(counter) << ",";
+				}
+				else if (pprocess != 1)
+				{
+					cout << sorted.at(counter) << " ";
+				}
+				cout  << sortedcount.at(counter)<< "; "; 
 				if (perline > 0 && (counter + 1) % perline == 0)
 				{
 					cout << endl;
@@ -218,7 +207,15 @@ int main(int argc, char *argv[])
 			}
 			else
 			{
-				cout << sorted.at(counter) << ": " << sortedfcount.at(counter) * 100 << " percent. ";
+				if (pprocess != 1 && pprocess == 2)
+				{
+					cout << sorted.at(counter) << ",";
+				}
+				else if (pprocess != 1)
+				{
+					cout << sorted.at(counter) << " ";
+				}
+				cout << setprecision(2) << sortedfcount.at(counter) * 100 << "; ";
 				if (perline > 0 && (counter + 1) % perline == 0)
 				{
 					cout << endl;
@@ -226,6 +223,5 @@ int main(int argc, char *argv[])
 			}
 			counter++;
 		}
-
-	
+		cout << endl;
 }
