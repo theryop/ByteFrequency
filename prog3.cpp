@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
 	int counter = 0;
 	int innercounter = 0;
 	int perline = 0;
+	double total;
 	if (argc > 1)
 	{
 		counter = 0;
@@ -37,7 +38,6 @@ int main(int argc, char *argv[])
 			if ((comptemp) == "-p")
 			{
 				percents = true;
-				cout << "ayyy" << endl;
 			}
 			if ((comptemp) == "-s")
 			{
@@ -56,6 +56,7 @@ int main(int argc, char *argv[])
 		vector<char> useri;
 		vector<string> sorted;
 		vector<int> sortedcount;
+		vector<double> sortedfcount;
 		//int ui = getchar();
 		counter = 0;
 		//while (ui != EOF) // reads inputstream and fills input string with chosen input
@@ -63,18 +64,30 @@ int main(int argc, char *argv[])
 		//	useri.push_back(ui);
 		//	ui = getchar();
 		//}
-		useri.push_back('T');
-		useri.push_back('h');
+		useri.push_back('a');
+		useri.push_back('g');
+		useri.push_back('e');
 		useri.push_back('e');
 		useri.push_back('e');
 		useri.push_back('d');
-		useri.push_back('g');
-		useri.push_back('g');
-		useri.push_back('g');
+		useri.push_back('2');
+		useri.push_back(' ');
+		useri.push_back(' ');
+		useri.push_back('a');
+		useri.push_back(' ');
+		useri.push_back(' ');
+		useri.push_back('n');
+		useri.push_back('n');
+		useri.push_back(' ');
+		useri.push_back('e');
+		useri.push_back('e');
+		useri.push_back('e');
+		useri.push_back(' ');
+		useri.push_back(' ');
 		
 		counter = 0;
 		cout << "size is " << useri.size() << endl;
-		while (counter < useri.size())
+		while ((unsigned)counter < useri.size())
 		{
 			char check = useri.at(counter);
 			char checkout1;
@@ -126,15 +139,17 @@ int main(int argc, char *argv[])
 			{
 				sorted.push_back(checkout);
 				sortedcount.push_back(1);
+				total++;
 			}
 			else
 			{
 				bool insorted = false;
-				while (innercounter < sorted.size())
+				while ((unsigned)innercounter < sorted.size())
 				{
 					if (sorted.at(innercounter) == checkout)
 					{
 						sortedcount.at(innercounter)++;
+						total++;
 						insorted = true;
 						break;
 					}
@@ -143,17 +158,72 @@ int main(int argc, char *argv[])
 				if (!insorted)
 				{
 					sorted.push_back(checkout);
+					total++;
 					sortedcount.push_back(1);
 				}
 			}
-			
 			counter++;
 		}
 		
 		counter = 0;
-		while (counter < sorted.size())
+		while ((unsigned)counter < sorted.size())
 		{
-			cout << sorted.at(counter) << ": " << sortedcount.at(counter) << " times." << endl;
+			double pf = sortedcount.at(counter) / total ;
+			sortedfcount.push_back(pf);
+			counter++;
+		}
+		if (outsort)
+		{
+			bool swapped = true;
+			int j = 0;
+			int tmp;
+			string stmp;
+			double dtmp;
+			while (swapped) 
+			{
+            swapped = false;
+            j++;
+            for (int i = 0; (unsigned)i < sorted.size() - j; i++) 
+            {
+                  if (sortedcount.at(i) < sortedcount.at(i+1)) 
+                  {
+                        tmp = sortedcount.at(i);
+						stmp = sorted.at(i);
+						dtmp = sortedfcount.at(i);
+						sortedcount.at(i) = sortedcount.at(i+1);
+						sorted.at(i) = sorted.at(i+1);
+						sortedfcount.at(i) = sortedfcount.at(i+1);
+                        sortedcount.at(i+1) = tmp;
+						sorted.at(i+1) = stmp;
+						sortedfcount.at(i+1) = dtmp;
+                        swapped = true;
+
+                  }
+
+            }
+
+		}
+	}
+		
+		counter = 0;
+		while ((unsigned)counter < sorted.size())
+		{
+			if (!percents)
+			{
+				cout << sorted.at(counter) << " " << sortedcount.at(counter) << "; ";
+				if (perline > 0 && (counter + 1) % perline == 0)
+				{
+					cout << endl;
+				}
+			}
+			else
+			{
+				cout << sorted.at(counter) << ": " << sortedfcount.at(counter) * 100 << " percent. ";
+				if (perline > 0 && (counter + 1) % perline == 0)
+				{
+					cout << endl;
+				}
+			}
 			counter++;
 		}
 
